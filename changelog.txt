@@ -1,13 +1,21 @@
 ---------------------------------------------------------------------------------------------------
-Version: 0.1.2
-Date: Oct 12, 2024
+Version: 0.1.3
+Date: Oct 22, 2024
+  Bugfix:
+    - Fixed bug when trying to position "legacy" items like train rails.
+    - Fixed shortcut usage and missing text
   Changes:
-    - Save toggle state when saving/loading game
+    - Items that are positioned on the cursor are now detected in addition to the inventory.
+---------------------------------------------------------------------------------------------------
+Version: 0.1.2
+Date: Oct 22, 2024
+  Changes:
+    - Save toggle state when saving/loading game.
 ---------------------------------------------------------------------------------------------------
 Version: 0.1.1
 Date: Oct 21, 2024
   Changes:
-    - Add thumbnail
+    - Add thumbnail.
 ---------------------------------------------------------------------------------------------------
 Version: 0.1.0
 Date: Oct 21, 2024

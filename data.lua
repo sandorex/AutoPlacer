@@ -13,7 +13,7 @@ data:extend{
         order = "a[ghost]-b[builder]",
         action = "lua",
         toggleable = true,
-        localised_name = {"autoghostbuilder.gui.toggle_button"},
+        localised_name = {"autoghostbuilder.gui.toggle-button"},
         associated_control_input = "ghost-builder-toggle",
         icons = {
             {
