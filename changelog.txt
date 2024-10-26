@@ -1,4 +1,9 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.1.5
+Date: Oct 27, 2024
+  Internal:
+    - For compatibility with other mods, we emit the script_raised_revive event when restoring ghost.
+---------------------------------------------------------------------------------------------------
 Version: 0.1.4
 Date: Oct 27, 2024
   Bugfix:

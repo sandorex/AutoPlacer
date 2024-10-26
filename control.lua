@@ -80,7 +80,7 @@ script.on_event({defines.events.on_selected_entity_changed}, function(event)
                     player_main_inventory.remove({name = item.name, count = 1, quality = hovered_entity.quality})
                 end
 
-                local revived, _ = hovered_entity.revive()
+                local revived, _ = hovered_entity.revive({ raise_revive = true })
                 if not revived then
                     -- Return the item if reviving the entity failed
                     player.insert({name = item.name, count = 1, quality = hovered_entity.quality})
