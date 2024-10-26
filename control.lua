@@ -67,13 +67,15 @@ script.on_event({defines.events.on_selected_entity_changed}, function(event)
         -- Iterate through the item list and attempt to use one to build the entity
         for _, item in pairs(item_list) do
             -- Check if the item is available either in the player's inventory or in the cursor stack
-            local has_item_in_inventory = player_main_inventory and player_main_inventory.get_item_count(item.name) > 0
-            local has_item_in_cursor = cursor_stack and cursor_stack.valid_for_read and cursor_stack.name == item.name
+            local has_item_in_inventory = player_main_inventory
+                    and player_main_inventory.get_item_count({ name = item.name, quality = hovered_entity.quality }) > 0
+            local has_item_in_cursor = cursor_stack and cursor_stack.valid_for_read
+                    and cursor_stack.name == item.name and cursor_stack.quality == hovered_entity.quality
 
             if has_item_in_inventory or has_item_in_cursor then
                 -- Attempt to remove the item and revive the ghost entity
                 if has_item_in_inventory then
-                    player_main_inventory.remove({name = item.name, count = 1})
+                    player_main_inventory.remove({name = item.name, count = 1, quality = hovered_entity.quality})
                 elseif has_item_in_cursor then
                     cursor_stack.count = cursor_stack.count - 1
                 end
@@ -81,7 +83,7 @@ script.on_event({defines.events.on_selected_entity_changed}, function(event)
                 local revived, _ = hovered_entity.revive()
                 if not revived then
                     -- Return the item if reviving the entity failed
-                    player.insert({name = item.name, count = 1})
+                    player.insert({name = item.name, count = 1, quality = hovered_entity.quality})
                     player.create_local_flying_text({
                         text = "Failed to build, item returned.",
                         position = player.position,
