@@ -74,10 +74,10 @@ script.on_event({defines.events.on_selected_entity_changed}, function(event)
 
             if has_item_in_inventory or has_item_in_cursor then
                 -- Attempt to remove the item and revive the ghost entity
-                if has_item_in_inventory then
-                    player_main_inventory.remove({name = item.name, count = 1, quality = hovered_entity.quality})
-                elseif has_item_in_cursor then
+                if has_item_in_cursor then
                     cursor_stack.count = cursor_stack.count - 1
+                elseif has_item_in_inventory then
+                    player_main_inventory.remove({name = item.name, count = 1, quality = hovered_entity.quality})
                 end
 
                 local revived, _ = hovered_entity.revive()

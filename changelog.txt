@@ -2,13 +2,15 @@
 Version: 0.1.4
 Date: Oct 27, 2024
   Bugfix:
-    - Fixed the bypass issue where it was always built with tier 1 quality items
+    - Fixed the bypass issue where it was always built with tier 1 quality items.
+  Changes:
+    - When holding items in your hand, you use these first, then the ones in your inventory.
 ---------------------------------------------------------------------------------------------------
 Version: 0.1.3
 Date: Oct 22, 2024
   Bugfix:
     - Fixed bug when trying to position "legacy" items like train rails.
-    - Fixed shortcut usage and missing text
+    - Fixed shortcut usage and missing text.
   Changes:
     - Items that are positioned on the cursor are now detected in addition to the inventory.
 ---------------------------------------------------------------------------------------------------
