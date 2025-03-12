@@ -1,4 +1,15 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.1.6
+Date: Mar 12, 2025
+  Forked
+
+  Gameplay:
+    - There is research required to use AutoGhostBuilder
+    - Only places items from the cursor if they match, to make it bit more balanced
+
+  Internal:
+    - Most of the code was rewritten, using the builtin shortcut to keep state of the plugin
+---------------------------------------------------------------------------------------------------
 Version: 0.1.5
 Date: Oct 27, 2024
   Internal:
