@@ -12,50 +12,14 @@ Date: Mar 13, 2025
     - Changed name to AutoPlacer to differentiate from the original project
     - Added new icons
     - Added links to the github repository
+
 ---------------------------------------------------------------------------------------------------
 Version: 0.1.6
 Date: Mar 12, 2025
-  Forked
-
   Gameplay:
     - There is research required to use AutoGhostBuilder
     - Only places items from the cursor if they match, to make it bit more balanced
 
   Internal:
-    - Most of the code was rewritten, using the builtin shortcut to keep state of the plugin
----------------------------------------------------------------------------------------------------
-Version: 0.1.5
-Date: Oct 27, 2024
-  Internal:
-    - For compatibility with other mods, we emit the script_raised_revive event when restoring ghost.
----------------------------------------------------------------------------------------------------
-Version: 0.1.4
-Date: Oct 27, 2024
-  Bugfix:
-    - Fixed the bypass issue where it was always built with tier 1 quality items.
-  Changes:
-    - When holding items in your hand, you use these first, then the ones in your inventory.
----------------------------------------------------------------------------------------------------
-Version: 0.1.3
-Date: Oct 22, 2024
-  Bugfix:
-    - Fixed bug when trying to position "legacy" items like train rails.
-    - Fixed shortcut usage and missing text.
-  Changes:
-    - Items that are positioned on the cursor are now detected in addition to the inventory.
----------------------------------------------------------------------------------------------------
-Version: 0.1.2
-Date: Oct 22, 2024
-  Changes:
-    - Save toggle state when saving/loading game.
----------------------------------------------------------------------------------------------------
-Version: 0.1.1
-Date: Oct 21, 2024
-  Changes:
-    - Add thumbnail.
----------------------------------------------------------------------------------------------------
-Version: 0.1.0
-Date: Oct 21, 2024
-  Changes:
-    - Initial release.
-
+    - Forked from the original AutoGhostBuilder
+    - Using a Shortcut to keep state of the plugin
