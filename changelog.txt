@@ -1,4 +1,10 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.1.8
+Date: Mar 13, 2025
+  Internal:
+    - Added proper packaging script
+    - Removed 30mb gif from the package, so the mod should download quickly now
+---------------------------------------------------------------------------------------------------
 Version: 0.1.7
 Date: Mar 13, 2025
 
