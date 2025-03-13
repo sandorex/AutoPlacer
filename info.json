@@ -1,13 +1,15 @@
 {
-  "name": "AutoGhostBuilder",
-  "version": "0.1.6",
+  "name": "autoplacer",
+  "version": "0.1.7",
   "factorio_version": "2.0",
-  "title": "Auto Ghost Builder",
+  "title": "Auto Placer",
   "author": "Sandorex",
-  "description": "Automatically build ghost entities on hover when holding the entity in cursor. Toggleable with a shortcut.",
+  "contact": "https://github.com/sandorex/AutoPlacer/issues",
+  "homepage": "https://github.com/sandorex/AutoPlacer",
+  "description": "Automatically place ghost entities from the item in the cursor",
   "dependencies": ["base >= 2.0"],
   "control_input": {
-    "name": "ghost-builder-toggle",
+    "name": "autoplacer-toggle",
     "type": "custom-input",
     "key_sequence": "CONTROL + G"
   }

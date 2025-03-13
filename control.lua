@@ -1,50 +1,50 @@
 -- control.lua
 
--- name of the ShortcutPrototype
-local GHOST_SHORTCUT = 'ghost-builder-toggle'
+-- name of the shortcut
+local SHORTCUT = 'autoplacer-toggle'
 
-local function gb_available(player)
-    return player.force.technologies["ghost-builder"].researched
+local function is_available(player)
+    return player.force.technologies["autoplacer"].researched
 end
 
-local function gb_set(player, state)
-    player.set_shortcut_toggled(GHOST_SHORTCUT, state)
+local function set_toggled(player, state)
+    player.set_shortcut_toggled(SHORTCUT, state)
 end
 
-local function gb_enabled(player)
-    return player.is_shortcut_toggled(GHOST_SHORTCUT)
+local function is_toggled(player)
+    return player.is_shortcut_toggled(SHORTCUT)
 end
 
 -- Function to toggle the state for a player
-local function toggle_ghost_builder(player)
+local function toggle_shortcut(player)
     if not player then return end
 
     -- if not available force disable it and return
-    if not gb_available(player) then
-        gb_set(player, false)
+    if not is_available(player) then
+        set_toggled(player, false)
         return
     end
 
     -- toggle it and alert the player
-    if gb_enabled(player) then
-        player.print("Auto Ghost Builder disabled")
-        gb_set(player, false)
+    if is_toggled(player) then
+        player.print("Auto Placer disabled")
+        set_toggled(player, false)
     else
-        player.print("Auto Ghost Builder enabled")
-        gb_set(player, true)
+        player.print("Auto Placer enabled")
+        set_toggled(player, true)
     end
 end
 
 -- Event for handling the shortcut press directly
 script.on_event(defines.events.on_lua_shortcut, function(event)
-    if event.prototype_name == GHOST_SHORTCUT then
-        toggle_ghost_builder(game.get_player(event.player_index))
+    if event.prototype_name == SHORTCUT then
+        toggle_shortcut(game.get_player(event.player_index))
     end
 end)
 
 -- Event for handling the custom key input (e.g., CONTROL + G)
-script.on_event(GHOST_SHORTCUT, function(event)
-    toggle_ghost_builder(game.get_player(event.player_index))
+script.on_event(SHORTCUT, function(event)
+    toggle_shortcut(game.get_player(event.player_index))
 end)
 
 -- Event for checking and building ghosts
@@ -52,8 +52,8 @@ script.on_event({defines.events.on_selected_entity_changed}, function(event)
     local player = game.get_player(event.player_index)
     if not player then return end
 
-    -- ensure toggled and enabled shortcut
-    if not gb_enabled(player) then return end
+    -- ensure toggled
+    if not is_toggled(player) then return end
 
     -- Check if the player is hovering over a ghost entity
     local hovered_entity = player.selected

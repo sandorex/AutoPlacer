@@ -1,4 +1,12 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.1.7
+Date: Mar 13, 2025
+
+  Internal:
+    - Changed name to AutoPlacer to differentiate from the original project
+    - Added new icons
+    - Added links to the github repository
+---------------------------------------------------------------------------------------------------
 Version: 0.1.6
 Date: Mar 12, 2025
   Forked
