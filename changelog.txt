@@ -1,4 +1,13 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.1.9
+Date: Mar 15, 2025
+  Bug Fixes:
+    - Fix looping error while trying to replace entities that are marked for deconstruction
+    - Now triggering auto placing when changing item in cursor, which includes pipette tool (Q)
+
+  General:
+    - Fixed changelog formatting so it shows in-game
+---------------------------------------------------------------------------------------------------
 Version: 0.1.8
 Date: Mar 13, 2025
   Internal:
