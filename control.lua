@@ -50,8 +50,13 @@ script.on_event(SHORTCUT, function(event)
     toggle_shortcut(game.get_player(event.player_index))
 end)
 
--- Event for checking and building ghosts
-script.on_event({defines.events.on_selected_entity_changed}, function(event)
+-- try to place on 2 different events:
+--   1. when entity hovered/selected has changed, when dragging cursor over ghosts
+--   2. when cursor item changes, like switching hotbar item or using pippete
+script.on_event({
+    defines.events.on_selected_entity_changed,
+    defines.events.on_player_cursor_stack_changed,
+}, function(event)
     local player = game.get_player(event.player_index)
     if not player then return end
 
