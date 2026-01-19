@@ -1,4 +1,12 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.1.10
+Date: Jan 19, 2026
+  Bug Fixes:
+    - Fix bug allowing placement of entities outside of build range
+
+  General:
+    - Removed green science research requirement
+---------------------------------------------------------------------------------------------------
 Version: 0.1.9
 Date: Mar 15, 2025
   Bug Fixes:

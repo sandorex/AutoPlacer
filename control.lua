@@ -3,11 +3,6 @@
 -- name of the shortcut
 local SHORTCUT = 'autoplacer-toggle'
 
--- ensure shortcut is available (by researching the technology)
-local function is_available(player)
-    return player.force.technologies["autoplacer"].researched
-end
-
 -- set the state of the shortcut
 local function set_toggled(player, state)
     player.set_shortcut_toggled(SHORTCUT, state)
@@ -20,11 +15,7 @@ end
 
 -- Function to toggle the state for a player
 local function toggle_shortcut(player)
-    if not player then return end
-
-    -- if not available force disable it and return
-    if not is_available(player) then
-        set_toggled(player, false)
+    if not player then
         return
     end
 
@@ -36,6 +27,16 @@ local function toggle_shortcut(player)
         player.print("Auto Placer enabled")
         set_toggled(player, true)
     end
+end
+
+-- calculate distance between two points
+local function distance_between(p1, p2)
+    local x1 = p1.x
+    local x2 = p2.x
+    local y1 = p1.y
+    local y2 = p2.y
+
+    return math.sqrt((x2 - x1)^2 + (y2 - y1)^2)
 end
 
 -- event for handling the shortcut press directly
@@ -58,17 +59,29 @@ script.on_event({
     defines.events.on_player_cursor_stack_changed,
 }, function(event)
     local player = game.get_player(event.player_index)
-    if not player then return end
+    if not player then
+        return
+    end
 
     -- ensure shortcut is toggled
-    if not is_toggled(player) then return end
+    if not is_toggled(player) then
+        return
+    end
 
     -- check if the player is hovering over a ghost entity
     local hovered_entity = player.selected
     if hovered_entity and hovered_entity.name == "entity-ghost" then
         -- get the ghost entity prototype
         local ghost_prototype = hovered_entity.ghost_prototype
-        if not ghost_prototype then return end
+        if not ghost_prototype then
+            return
+        end
+
+        -- prevent player from placing things outside the build range
+        local distance = distance_between(hovered_entity.position, player.position)
+        if distance > player.build_distance then
+            return
+        end
 
         local item_list = ghost_prototype.items_to_place_this
         local cursor_stack = player.cursor_stack
@@ -83,7 +96,9 @@ script.on_event({
             direction = hovered_entity.direction,
             force = player.force,
             build_check_type = defines.build_check_type.ghost_revive,
-        }) then return end
+        }) then
+            return
+        end
 
         -- check if item in cursor can be used to build the hovered ghost
         for _, item in pairs(item_list) do
