@@ -3,4 +3,5 @@ COMMIT export-subst
 .gitattributes export-ignore
 .gitignore export-ignore
 package.sh export-ignore
+link.sh export-ignore
 demo.gif export-ignore
