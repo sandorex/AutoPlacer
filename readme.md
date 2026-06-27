@@ -2,7 +2,7 @@
 
 Mod for [Factorio](https://factorio.com)
 
-Early construction mod that aims to speed up the early game without making bots obselete by allowing automatic placement of ghost entities from the cursor
+Early construction / deconstruction mod that aims to speed up the early game without making bots obselete by allowing automatic placement of ghost entities from the cursor and automatic deconstruction on hover
 
 ![Demo](demo.gif)
 

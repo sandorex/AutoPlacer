@@ -1,7 +1,12 @@
 -- control.lua
 
+local util = require("scripts.util")
+
 -- name of the shortcut
 local SHORTCUT = 'autoplacer-toggle'
+
+-- -- players that are currently mining (to prevent infinite loop caused by events)
+local players_mining = {}
 
 -- set the state of the shortcut
 local function set_toggled(player, state)
@@ -23,33 +28,62 @@ local function toggle_shortcut(player)
     if is_toggled(player) then
         player.print("Auto Placer disabled")
         set_toggled(player, false)
+
+        -- disable on_tick event
+        script.on_event(defines.events.on_tick, nil)
     else
         player.print("Auto Placer enabled")
         set_toggled(player, true)
+
+        -- enable on_tick event
+        players_mining[player.index] = nil
+        script.on_event(defines.events.on_tick, on_tick)
     end
-end
-
--- calculate distance between two points
-local function distance_between(p1, p2)
-    local x1 = p1.x
-    local x2 = p2.x
-    local y1 = p1.y
-    local y2 = p2.y
-
-    return math.sqrt((x2 - x1)^2 + (y2 - y1)^2)
 end
 
 -- event for handling the shortcut press directly
 script.on_event(defines.events.on_lua_shortcut, function(event)
     if event.prototype_name == SHORTCUT then
-        toggle_shortcut(game.get_player(event.player_index))
+        toggle_shortcut(game.players[event.player_index])
     end
 end)
 
 -- event for handling the custom key input
 script.on_event(SHORTCUT, function(event)
-    toggle_shortcut(game.get_player(event.player_index))
+    toggle_shortcut(game.players[event.player_index])
 end)
+
+script.on_event(defines.events.on_player_mined_entity, function(event)
+    local player_index = event.player_index
+
+    local player_state = players_mining[player_index]
+    if not player_state then
+        return
+    end
+
+    if player_state.next and #player_state.next > 0 then
+        -- find next item to mine
+        local position = table.remove(players_mining[player_index].next)
+        players_mining[player_index].position = position
+    else
+        players_mining[player_index] = nil
+    end
+end)
+
+function on_tick(event)
+    -- set mining for each player (it has to be updated each tick)
+    for player_index, data in pairs(players_mining) do
+        local player = game.players[player_index]
+        if player then
+            player.mining_state = {
+                mining = true,
+                position = data.position,
+            }
+        else
+            players_mining[player_index] = nil
+        end
+    end
+end
 
 -- try to place on 2 different events:
 --   1. when entity hovered/selected has changed, when dragging cursor over ghosts
@@ -58,7 +92,7 @@ script.on_event({
     defines.events.on_selected_entity_changed,
     defines.events.on_player_cursor_stack_changed,
 }, function(event)
-    local player = game.get_player(event.player_index)
+    local player = game.players[event.player_index]
     if not player then
         return
     end
@@ -70,7 +104,16 @@ script.on_event({
 
     -- check if the player is hovering over a ghost entity
     local hovered_entity = player.selected
-    if hovered_entity and hovered_entity.name == "entity-ghost" then
+    if not hovered_entity or not hovered_entity.valid then
+        return
+    end
+
+    if hovered_entity.to_be_deconstructed() then
+        -- start mining
+        players_mining[event.player_index] = {
+            position = hovered_entity.position,
+        }
+    elseif hovered_entity and hovered_entity.name == "entity-ghost" then
         -- get the ghost entity prototype
         local ghost_prototype = hovered_entity.ghost_prototype
         if not ghost_prototype then
@@ -78,7 +121,7 @@ script.on_event({
         end
 
         -- prevent player from placing things outside the build range
-        local distance = distance_between(hovered_entity.position, player.position)
+        local distance = util.distance_between(hovered_entity.position, player.position)
         if distance > player.build_distance then
             return
         end
