@@ -1,4 +1,14 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.1.13
+Date: Nov 18, 2026
+  General:
+    - Added Simplified Chinese (zh-CN) localisation
+    - Automatically mining entities marked for deconstruction is now a per-player setting, disabled by default
+
+  Internal:
+    - All player-visible strings are now localised
+    - on_tick handler is only registered while a player is mining
+---------------------------------------------------------------------------------------------------
 Version: 0.1.12
 Date: Oct 23, 2026
   General:
