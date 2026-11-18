@@ -46,10 +46,10 @@ local function toggle_shortcut(player)
 
     -- toggle it and alert the player
     if is_toggled(player) then
-        player.print("Auto Placer disabled")
+        player.print{"autoplacer.gui.disabled"}
         set_toggled(player, false)
     else
-        player.print("Auto Placer enabled")
+        player.print{"autoplacer.gui.enabled"}
         set_toggled(player, true)
     end
 end
@@ -184,7 +184,7 @@ script.on_event({
                 -- last fallback if for some reason the revive fails
                 player.insert({name = item.name, count = 1, quality = hovered_entity.quality})
                 player.create_local_flying_text({
-                    text = "Failed to build, item returned.",
+                    text = {"autoplacer.gui.failed-build-item-returned"},
                     position = player.position,
                     color = {r = 1, g = 0, b = 0},
                     time_to_live = 600
