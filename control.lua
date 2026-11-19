@@ -4,6 +4,7 @@ local util = require("scripts.util")
 
 -- name of the shortcut
 local SHORTCUT = 'autoplacer-toggle'
+local MINING_OPTION = 'autoplacer-automine'
 
 -- -- players that are currently mining (to prevent infinite loop caused by events)
 local players_mining = {}
@@ -16,6 +17,10 @@ end
 -- check the state of the shortcut
 local function is_toggled(player)
     return player.is_shortcut_toggled(SHORTCUT)
+end
+
+local function is_mining_enabled(player)
+    return settings.get_player_settings(player)[MINING_OPTION].value
 end
 
 -- Function to toggle the state for a player
@@ -37,7 +42,12 @@ local function toggle_shortcut(player)
 
         -- enable on_tick event
         players_mining[player.index] = nil
-        script.on_event(defines.events.on_tick, on_tick)
+
+        if is_mining_enabled(player) then
+            script.on_event(defines.events.on_tick, on_tick)
+        else
+            script.on_event(defines.events.on_tick, nil)
+        end
     end
 end
 
@@ -55,6 +65,10 @@ end)
 
 script.on_event(defines.events.on_player_mined_entity, function(event)
     local player_index = event.player_index
+
+    if is_mining_enabled(player_index) then
+        return
+    end
 
     local player_state = players_mining[player_index]
     if not player_state then
@@ -110,9 +124,11 @@ script.on_event({
 
     if hovered_entity.to_be_deconstructed() then
         -- start mining
-        players_mining[event.player_index] = {
-            position = hovered_entity.position,
-        }
+        if is_mining_enabled(player) then
+            players_mining[event.player_index] = {
+                position = hovered_entity.position,
+            }
+        end
     elseif hovered_entity and hovered_entity.name == "entity-ghost" then
         -- get the ghost entity prototype
         local ghost_prototype = hovered_entity.ghost_prototype
