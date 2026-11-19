@@ -6,7 +6,7 @@ Early construction / deconstruction mod that aims to speed up the early game wit
 
 ![Demo](demo.gif)
 
-The current version target is `2.0+`
+The current version target is `2.1+`
 
 # Credits
 Huge thanks to [@kb714](https://github.com/kb714) for [AutoGhostBuilder](https://github.com/kb714/AutoGhostBuilder) on which this code was built on
